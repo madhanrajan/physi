@@ -1,0 +1,37 @@
+{% extends 'engine/base.html' %}
+
+    
+
+{% block content %}
+
+    {% if user.is_staff %}
+        <a class="btn btn-primary" href={% url 'book_create' %}>Add Book</a>
+        <br>
+        <br>
+    {% endif %}
+
+    {% for book in object_list %}
+    <div class="container tile">
+    <a class="tile-link" href={% url 'specific_post_list' book_pk=book.pk %}>
+        <br>
+
+        <h3>{{book.title}}</h3>
+        <p class="text-main">{{book.description}}</p>
+
+        <p class="text-description">Subjects:
+        {% for subject in book.subject.all %}
+            <object><a href="">{{subject.title}}</a></object>
+        {% endfor %}
+
+        </p>
+
+        <i><p class="text-description">Create date: {{ book.create_date|date:"d M Y" }}</p></i>
+
+        <br>
+
+    </a>
+    </div>
+    {% endfor %}
+
+
+{% endblock content %}

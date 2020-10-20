@@ -1,0 +1,87 @@
+{% extends 'engine/base.html' %}
+
+{% block brand %}
+<span class="">P</span>
+<span class="">H</span>
+<span class="">Y</span>
+<span class="">S</span>
+<span class="">I</span>
+{% endblock brand %}
+
+
+{% block content %}
+
+<br>
+
+<h1 class="main-title container">
+    <span class="p">P</span>
+    <span class="h">H</span>
+    <span class="y">Y</span>
+    <span class="s">S</span>
+    <span class="i">I</span>
+
+</h1>
+
+<form name="searchform" class="container container-mainpage align-left" action={% url 'post_list' %} %} method="get">
+
+
+    <input name="q" id="searchBar" class="searchbar" type="text" placeholder="Search for topics!"
+        value="{{query_text}}">
+    <a href="javascript: submitform()" id="btnSearch" class="btn-search"><i class="fa fa-search"></i></a>
+
+</form>
+
+</p>
+<br>
+
+{% for post in object_list %}
+<div class="tile container">
+    <br>
+    <a class="tile-link" href={% url 'post_detail' pk=post.pk %}>
+        <h3>{{post.title}}</h3>
+        <p class="text-main">{{post.description}}</p>
+        {% comment %} <p><object><a href={% url 'post_tag_create' pk=post.pk %}>Add Tags</a></object></p>
+        {% endcomment %}
+
+        {% if post.tags.all %}
+
+        <p class="text-description"> Tags:
+            {% for tag in post.tags.all %}
+            {{ tag.text.upper }}
+            {% endfor %}
+
+        </p>
+        {% endif %}
+
+
+
+        <p class="text-description">Book: <object><a
+                    href={% url 'specific_post_list' book_pk=post.source_file.pk %}>{{post.source_file.title}}</a></object>
+        </p>
+        <p class="text-description">{{post.source_file.description}}</p>
+        <p class="text-description">Subjects:
+            {% for subject in post.source_file.subject.all %}
+            <object><a href="">{{subject.title}}</a></object>
+            {% endfor %}
+
+        </p>
+
+
+        <i>
+            <p class="text-description">Create date: {{ post.create_date|date:"d M Y" }}</p>
+        </i>
+
+
+    </a>
+    <br>
+</div>
+{% empty %}
+
+<div class="container">
+    <h3>No posts found.</h3>
+</div>
+
+
+{% endfor %}
+
+{% endblock content %}

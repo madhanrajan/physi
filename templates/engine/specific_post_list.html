@@ -1,0 +1,44 @@
+{% extends 'engine/base.html' %}
+
+{% block content %}
+
+
+
+<div class="container">
+    {% if user.is_staff %}
+    <a class="btn btn-primary" href={% url 'post_create' book_pk=book_pk %}>Add Topic</a>
+    <br>
+    <br>
+    {% endif %}
+    
+    <h3>Book: <a href={% url 'book_detail' pk=book_pk %}>{{object_list.first.source_file.title}}</a></h3>
+    <p class="text-description">Subjects:
+        {% for subject in object_list.first.source_file.subject.all %}
+            <object><a href="">{{subject.title}}</a></object>
+        {% endfor %}
+    </p>
+</div>
+
+
+{% for post in object_list %}
+<div class="tile container">
+        <br>
+        <a class="tile-link" href={% url 'post_detail' pk=post.pk %}>
+        <h3>{{post.title}}</h3>
+        <p class="text-main">{{post.description}}</p>
+
+
+        
+
+        
+        <i><p class="text-description">Create date: {{ post.create_date|date:"d M Y" }}</p></i>
+
+
+        </a>
+        <br>
+    </div>
+
+
+{% endfor %}
+
+{% endblock content %}

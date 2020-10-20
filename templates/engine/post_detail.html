@@ -1,0 +1,13 @@
+{% extends 'engine/base.html' %}
+{% load static %}
+
+
+{% block content2 %}
+
+
+<iframe class="pdf-viewer" src="{% static 'pdfjs-2/web/viewer.html' %}?file={{ data }}" />
+
+
+
+
+{% endblock content2 %}
